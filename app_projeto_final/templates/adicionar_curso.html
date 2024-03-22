@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <form action="{% url 'adicionar_curso' %}" method="POST">
+    {% csrf_token %}
+    <label class="label-control"  for="nome_curso">Nome do Curso:
+      <input class="form-control" id="nome_curso" name="novo_curso" type="text">
+    </label><br><br>
+
+    <label class="label-control" for="curso">Professor:
+      <select class="form-select" name="curso" id="curso" aria-label="Default select example">
+          <option selected>Selecione o Professor</option>
+          {% for professor in professores %}
+          <option value="{{ professor.id }}">{{ professor.nome }}</option>
+          {% endfor %}
+      </select>
+  </label><br><br>
+
+    <button class="btn btn-success" type="submit">Adicionar</button>
+  </form>
+</div>
+
+{% endblock %}

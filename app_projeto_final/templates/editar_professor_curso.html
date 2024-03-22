@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="{% url 'editar_professor_curso' curso.id %}" method="POST">
+  {% csrf_token %}
+  <h2>Editar Professores do Curso: {{ curso.nome }}</h2>
+  <ul>
+    
+    <li>
+      <label for="professores">Selecione o novo Professor:<br><br>
+        <select class="form-select" name="professores" id="professores">
+          <option selected>Selecione o Professor</option>
+          {% for professor in professores %}
+          <option value="{{ professor.id }}">{{ professor.nome }}</option>
+          {% endfor %}
+        </select>
+      </label>
+  </ul>
+  <button class="btn btn-success" type="submit">Salvar</button>
+</form>
+
+{% endblock %}

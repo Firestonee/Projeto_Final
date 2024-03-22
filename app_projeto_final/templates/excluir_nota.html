@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<p>
+  Deseja excluir a nota?
+  <form action="{% url 'excluir_nota' aluno.id curso.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit">SIM</button>  <button><a href="{% url 'aluno' %}">NÃO</a></button>
+  </form>
+</p>
+
+{% endblock %}

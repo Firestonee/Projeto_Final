@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+<div class="container pt-5">
+  <button class="btn btn-success"><a class="nav-link active" href="{% url 'adicionar_aluno' %}">
+    Adicionar Aluno
+  </a></button><br><br>
+  <table class="table table-success table-striped">
+  <thead>
+    <th>Nome:</th>
+    <th>Curso:</th>
+    <th>Notas:</th>
+    <th></th>
+  </thead>
+  <tbody>
+    {% for aluno in alunos %}
+    {% for curso in aluno.cursos.all%}
+    <tr>
+      <td>
+        {{aluno.nome}}
+      </td>
+      <td>
+          {% for curso in aluno.cursos.all %}
+          {{curso.nome}}
+          {% endfor %}
+      </td>
+      <td>
+        {% for nota in notas %}
+          {% if nota.aluno == aluno and nota.curso == curso %}
+            {{ nota.nota }}
+          {% endif %}
+        {% endfor %}
+      </td>
+      <td>
+        <button class="btn btn-success" >
+          <a class="nav-link active" href="{% url 'adicionar_nota' aluno.id curso.id %}">Adicionar</a>
+        </button>
+        <button class="btn btn-primary" >
+          <a class="nav-link active" href="{% url 'editar_nota' aluno.id curso.id %}">Editar Nota</a>
+        </button>
+        {% if request.user.is_staff %}
+        <button class="btn btn-danger" >
+          <a class="nav-link active" href="{% url 'excluir_nota' aluno.id curso.id %}">Exlcuir</a>
+        </button>
+        
+        {% endif %}
+
+      </td>
+    </tr>
+    {% endfor %}
+    {% endfor %}
+  </tbody>
+</table>
+  
+    
+  
+</div>
+
+{% else %}
+        <h3>Faça <a href="{% url 'login' %}">Login</a> para acessar o painel Aluno</h3>
+{% endif %}  
+{% endblock %}

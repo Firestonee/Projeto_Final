@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex flex-directiom-colum justify-content-around">
+
+  <h3>Curso</h3>
+  <button class="btn btn-success">
+    <a class="nav-link active" href="{% url 'adicionar_curso' %}">Adicionar Curso</a>
+  </button>
+
+  <h3 >Professores</h3>
+  <button class="btn btn-success">
+    <a class="nav-link active" href="{% url 'adicionar_professor' %}">Adicionar Professor</a>
+  </button>
+  
+</div>
+<div class="container d-flex gap-5 pt-2">
+  
+  <table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th class="text-center" colspan="3">LISTA DE CURSOS</th>
+      </tr>
+      <tr>
+        <th>Nome do Curso:</th>
+        <th>Professor:</th>
+        <th>Ações</th>
+      </tr>
+      
+    </thead>
+    <tbody>
+      {% for curso in cursos %}
+      <tr>
+        <td>
+          {{ curso.nome }}
+        </td>
+
+        <td>
+          {% for professor in curso.professor.all %}
+            {{ professor.nome }}
+          {% endfor %}
+        </td>
+
+        <td>
+          <button class="btn btn-primary">
+            <a class="nav-link active" href="{% url 'editar_professor_curso' curso.id %}">Editar</a>
+          </button>
+
+          <button class="btn btn-danger">
+            <a class="nav-link active" href="{% url 'excluir_curso' curso.id %}">Excluir Curso</a>
+          </button>
+        </td>
+      </tr>
+        
+      {% endfor %}
+    </tbody>
+    
+  </table>
+
+  <table class="table table-success table-striped">
+
+    <thead>
+      <tr>
+        <th colspan="3" class="text-center">LISTA DE PROFESSORES</th>
+      </tr>
+
+      <tr>
+        <th colspan="3">Nome:</th>
+      </tr>
+
+    </thead>
+    
+    <tbody>
+
+      {% for professor in professores %}
+      <tr>
+        <td>
+            {{professor.nome}}
+        </td>
+
+        <td></td>
+
+        <td>
+          <button class="btn btn-danger">
+            <a class="nav-link active" href="{% url 'excluir_professor' professor.id %}">Excluir</a>
+          </button>
+        </td>
+
+      </tr>
+      {% endfor %}
+
+    </tbody>
+    
+
+  </table>
+
+</div>
+
+{% endblock %}

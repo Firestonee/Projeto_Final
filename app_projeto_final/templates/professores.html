@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+<h1 class="text-center pt-3">LISTAGEM DE PROFESSORES E RESPECTIVOS CURSOS</h1>
+<div class="container pt-5">
+  <table class="table table-success table-striped">
+  <thead>
+    <th>Professor:</th>
+    <th>Curso:</th>
+  </thead>
+  <tbody>
+    {% for professor in professores %}
+    <tr>
+      <td>
+        {{professor.nome}}
+      </td>
+      <td>
+        {% for curso in professor.curso_set.all %}
+        {{ curso.nome }}
+        {% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+        <h3>Faça <a href="{% url 'login' %}">Login</a> para acessar o painel Professor</h3>
+{% endif %}
+{% endblock %}
